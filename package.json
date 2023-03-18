@@ -1,0 +1,14 @@
+{
+  "name": "youtrack-article-export",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/tgabi333/youtrack-article-export.git",
+  "author": "tgabi333 <tgabi333@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
