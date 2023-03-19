@@ -19,7 +19,7 @@ const argv = yargs(hideBin(process.argv))
   fs.rmSync('./output', { recursive: true, force: true })
   fs.mkdirSync('./output')
 
-  const allArticles = await f.all()
+  const allArticles = await f.allArticles()
   console.log('ALL Articles:', allArticles.length)
   const projectArticles = allArticles.filter(article => article.project.shortName === argv.project)
   console.log('PROJECT Articles:', projectArticles.length)

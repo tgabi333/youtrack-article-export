@@ -27,7 +27,7 @@ const argv = yargs(hideBin(process.argv))
 
 	const article = await f.byId(id)
 
-	preprocessMarkdown(article)
+	await preprocessMarkdown(article, f)
 
 	if (article.content) {
 		console.log((article.idReadable || article.id), article.summary)

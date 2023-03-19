@@ -3,7 +3,9 @@ const fs = require('fs')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
-const { generateDocumentationStack, preprocessMarkdown } = require('./lib/helpers/generate')
+const { generateDocumentationStack } = require('./lib/helpers/generate')
+const { preprocessMarkdown } = require('./lib/helpers/preProcess')
+const { generateToC } = require('./lib/helpers/toc')
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
@@ -20,7 +22,7 @@ const argv = yargs(hideBin(process.argv))
   fs.rmSync('./output', { recursive: true, force: true })
   fs.mkdirSync('./output')
 
-  const allArticles = await f.all()
+  const allArticles = await f.allArticles()
   console.log('ALL ARTICLES:', allArticles.length)
   const root = allArticles.find(a => a.id === argv.id || a.idReadable === argv.id)
   if (!root) {
@@ -38,12 +40,13 @@ const argv = yargs(hideBin(process.argv))
     fullArticle.level = a.level
     fullStack.push(fullArticle)
 
-    preprocessMarkdown(fullArticle)
+    await preprocessMarkdown(fullArticle, f)
   }
 
   const coverPage = generateCover(root)
+  const toc = generateToC(fullStack)
 
-  await generateDocumentationStack(fullStack, f, coverPage)
+  await generateDocumentationStack(fullStack, f, [coverPage, toc])
 
   function recursiveFindChildren(root, allArticles, level= 0) {
     let stack = []
