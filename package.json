@@ -10,7 +10,7 @@
     "dotenv": "^16.0.3",
     "jsdom": "^21.1.1",
     "marked": "^4.2.12",
-    "md-to-pdf": "https://github.com/tgabi333/md-to-pdf",
+    "md-to-pdf": "^5.2.3",
     "transliteration": "^2.3.5",
     "yargs": "^17.7.1"
   },

@@ -1,16 +1,13 @@
 require('dotenv').config()
 const fs = require('fs')
-const marked = require('marked')
-const { JSDOM } = require('jsdom')
-const { mdToPdf } = require('md-to-pdf')
-const { transliterate } = require('transliteration')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
-const generateDocumentation = require('./lib/helpers')
+const { generateDocumentationStack, preprocessMarkdown } = require('./lib/helpers/generate')
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
+const { generateCover } = require('./lib/helpers/coverPage');
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 -id [string]')
   .demandOption(['id'])
@@ -24,50 +21,44 @@ const argv = yargs(hideBin(process.argv))
   fs.mkdirSync('./output')
 
   const allArticles = await f.all()
+  console.log('ALL ARTICLES:', allArticles.length)
   const root = allArticles.find(a => a.id === argv.id || a.idReadable === argv.id)
   if (!root) {
     console.error('Cannot find root Article', argv.id)
     process.exit(-1)
   }
 
-  if (!root.attachments) {
-    root.attachments = []
-  }
+  const stack = recursiveFindChildren(root, allArticles)
 
-  const stack = []
-  recursiveFindChildren(root, allArticles)
-
+  // download full articles
+  const fullStack = []
   for (const a of stack) {
-    const article = await f.byId(a.id)
+    console.log('DOWNLOADING:', a.id, a.summary)
+    const fullArticle = await f.byId(a.id)
+    fullArticle.level = a.level
+    fullStack.push(fullArticle)
 
-    if (article.attachments) {
-      for (const attachment of article.attachments) {
-        attachment.originalArticle = a
-      }
-      root.attachments = root.attachments.concat(article.attachments)
-    }
-
-    if (article.content) {
-      console.log(article.id, article.summary)
-
-      root.content = (root.content || '' ) + '\n---\n' + article.content
-    } else {
-      console.log('EMPTY CONTENT', article)
-    }
+    preprocessMarkdown(fullArticle)
   }
 
-  await generateDocumentation(root, f)
+  const coverPage = generateCover(root)
 
-  function recursiveFindChildren(root, allArticles) {
+  await generateDocumentationStack(fullStack, f, coverPage)
+
+  function recursiveFindChildren(root, allArticles, level= 0) {
+    let stack = []
+    root.level = level
     stack.push(root)
     const children = filterChildren(root, allArticles)
     for (const c of children) {
+      c.level = level + 1
       stack.push(c)
       const child2 = filterChildren(c, allArticles)
       for (const c2 of child2) {
-        recursiveFindChildren(c2, allArticles)
+        stack = stack.concat(recursiveFindChildren(c2, allArticles, level + 2))
       }
     }
+    return stack
   }
 
   function filterChildren(current, allArticles) {

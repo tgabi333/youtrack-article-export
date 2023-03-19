@@ -1,13 +1,9 @@
 require('dotenv').config()
 const fs = require('fs')
-const marked = require('marked')
-const { JSDOM } = require('jsdom')
-const { mdToPdf } = require('md-to-pdf')
-const { transliterate } = require('transliteration')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
-const generateDocumentation = require('./lib/helpers')
+const {generateDocumentation, saveAttachments } = require('./lib/helpers/generate')
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
@@ -36,7 +32,8 @@ const argv = yargs(hideBin(process.argv))
     const article = await f.byId(a.id)
 
     if (article.content) {
-      console.log(article.id, article.summary)
+      console.log((article.idReadable || article.id), article.summary)
+      await saveAttachments(article, f)
       await generateDocumentation(article)
     } else {
       console.log('EMPTY CONTENT', article)

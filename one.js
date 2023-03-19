@@ -7,7 +7,7 @@ const { transliterate } = require('transliteration')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
-const generateDocumentation = require('./lib/helpers')
+const { generateDocumentation, saveAttachments, preprocessMarkdown } = require('./lib/helpers/generate')
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
@@ -27,8 +27,12 @@ const argv = yargs(hideBin(process.argv))
 
 	const article = await f.byId(id)
 
+	preprocessMarkdown(article)
+
 	if (article.content) {
-		console.log(article.id, article.summary)
+		console.log((article.idReadable || article.id), article.summary)
+
+		await saveAttachments(article, f);
 		await generateDocumentation(article, f)
 	} else {
 		console.log('EMPTY CONTENT', article)
