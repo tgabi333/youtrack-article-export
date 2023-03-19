@@ -1,12 +1,18 @@
 {
   "name": "youtrack-article-export",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "project.js",
   "repository": "https://github.com/tgabi333/youtrack-article-export.git",
   "author": "tgabi333 <tgabi333@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "@sindresorhus/transliterate": "^1.6.0",
+    "dotenv": "^16.0.3",
+    "jsdom": "^21.1.1",
+    "marked": "^4.2.12",
+    "md-to-pdf": "https://github.com/tgabi333/md-to-pdf",
+    "transliteration": "^2.3.5",
+    "yargs": "^17.7.1"
   },
   "engines": {
     "node": ">=18.0.0"

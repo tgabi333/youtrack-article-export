@@ -1,0 +1,57 @@
+#toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#toc ul li {
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+}
+
+#toc ul li:before {
+    content: none;
+}
+
+#toc ul li:not(:last-child) {
+    margin-bottom: 8px;
+}
+
+#toc ul li a {
+    display: block;
+    text-decoration: none;
+    margin-left: 20px;
+    color: black;
+}
+
+#toc ul ul {
+    margin-left: 20px;
+}
+
+#toc ul ul ul {
+    margin-left: 30px;
+}
+
+#toc ul ul li {
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-top: 4px;
+}
+
+#toc ul ul ul li {
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-top: 2px;
+}
+
+#toc ul ul ul ul li {
+    line-height: 1.5;
+    margin-bottom: 0;
+    margin-top: 2px;
+}
+
+#toc ul ul li a {
+    margin-left: 0;
+    text-decoration: none;
+}
