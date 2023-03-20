@@ -12,12 +12,12 @@ const { generateDocumentation, saveAttachments, preprocessMarkdown } = require('
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv))
-  .usage('Usage: $0 -id [string]')
+  .usage('Usage: $0 --id [string]')
   .demandOption(['id'])
   .argv
 
 ;(async () => {
-  const access = new AccessSettings(process.env.YOUTRACK_HOST, process.env.YOUTRACK_TOKEN)
+  const access = new AccessSettings(process.env.YOUTRACK_URL, process.env.YOUTRACK_TOKEN)
   const f = new ArticleFetcher(access)
 
   fs.rmSync('./output', { recursive: true, force: true })

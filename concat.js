@@ -11,19 +11,19 @@ const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 const { generateCover } = require('./lib/helpers/coverPage')
 const argv = yargs(hideBin(process.argv))
-  .usage('Usage: $0 -id [string]')
+  .usage('Usage: $0 --id [string]')
   .demandOption(['id'])
   .argv
 
 ;(async () => {
-  const access = new AccessSettings(process.env.YOUTRACK_HOST, process.env.YOUTRACK_TOKEN)
+  const access = new AccessSettings(process.env.YOUTRACK_URL, process.env.YOUTRACK_TOKEN)
   const f = new ArticleFetcher(access)
 
   fs.rmSync('./output', { recursive: true, force: true })
   fs.mkdirSync('./output')
 
   const allArticles = await f.allArticles()
-  console.log('ALL ARTICLES:', allArticles.length)
+  console.log('all articles count:', allArticles.length)
   const root = allArticles.find(a => a.id === argv.id || a.idReadable === argv.id)
   if (!root) {
     console.error('Cannot find root Article', argv.id)
@@ -35,7 +35,7 @@ const argv = yargs(hideBin(process.argv))
   // download full articles
   const fullStack = []
   for (const a of stack) {
-    console.log('DOWNLOADING:', a.id, a.summary)
+    console.log('downloading article:', a.id, a.summary)
     const fullArticle = await f.byId(a.id)
     fullArticle.level = a.level
     fullStack.push(fullArticle)

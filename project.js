@@ -8,25 +8,25 @@ const { generateDocumentation, saveAttachments } = require('./lib/helpers/genera
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv))
-  .usage('Usage: $0 -project [string]')
+  .usage('Usage: $0 --project [string]')
   .demandOption(['project'])
   .argv
 
 ;(async () => {
-  const access = new AccessSettings(process.env.YOUTRACK_HOST, process.env.YOUTRACK_TOKEN)
+  const access = new AccessSettings(process.env.YOUTRACK_URL, process.env.YOUTRACK_TOKEN)
   const f = new ArticleFetcher(access)
 
   fs.rmSync('./output', { recursive: true, force: true })
   fs.mkdirSync('./output')
 
   const allArticles = await f.allArticles()
-  console.log('ALL Articles:', allArticles.length)
+  console.log('all articles count:', allArticles.length)
   const projectArticles = allArticles.filter(article => article.project.shortName === argv.project)
-  console.log('PROJECT Articles:', projectArticles.length)
+  console.log('project articles count:', projectArticles.length)
 
   const topArticles = projectArticles.filter(article => !article.parentArticle)
   topArticles.sort((a, b) => { return a.ordinal - b.ordinal })
-  console.log('PROJECT TOP Articles:', topArticles.length)
+  console.log('project top articles count:', topArticles.length)
 
   for (const a of projectArticles) {
     const article = await f.byId(a.id)
