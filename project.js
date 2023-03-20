@@ -36,7 +36,7 @@ const argv = yargs(hideBin(process.argv))
       await saveAttachments(article, f)
       await generateDocumentation(article)
     } else {
-      console.log('EMPTY CONTENT', article)
+      console.log('empty content', article)
     }
   }
 })()
