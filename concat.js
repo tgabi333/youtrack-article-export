@@ -9,13 +9,13 @@ const { generateToC } = require('./lib/helpers/toc')
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
-const { generateCover } = require('./lib/helpers/coverPage');
+const { generateCover } = require('./lib/helpers/coverPage')
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 -id [string]')
   .demandOption(['id'])
   .argv
 
-;(async() => {
+;(async () => {
   const access = new AccessSettings(process.env.YOUTRACK_HOST, process.env.YOUTRACK_TOKEN)
   const f = new ArticleFetcher(access)
 
@@ -48,7 +48,7 @@ const argv = yargs(hideBin(process.argv))
 
   await generateDocumentationStack(fullStack, f, [coverPage, toc])
 
-  function recursiveFindChildren(root, allArticles, level= 0) {
+  function recursiveFindChildren (root, allArticles, level = 0) {
     let stack = []
     root.level = level
     stack.push(root)
@@ -64,9 +64,9 @@ const argv = yargs(hideBin(process.argv))
     return stack
   }
 
-  function filterChildren(current, allArticles) {
+  function filterChildren (current, allArticles) {
     const children = allArticles.filter(a => (a.parentArticle && a.parentArticle.id === current.id))
     children.sort((a, b) => { return a.ordinal - b.ordinal })
     return children
   }
-})();
+})()

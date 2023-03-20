@@ -12,31 +12,29 @@ const { generateDocumentation, saveAttachments, preprocessMarkdown } = require('
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv))
-	.usage('Usage: $0 -id [string]')
-	.demandOption(['id'])
-	.argv
+  .usage('Usage: $0 -id [string]')
+  .demandOption(['id'])
+  .argv
 
-;(async() => {
-	const access = new AccessSettings(process.env.YOUTRACK_HOST, process.env.YOUTRACK_TOKEN)
-	const f = new ArticleFetcher(access)
+;(async () => {
+  const access = new AccessSettings(process.env.YOUTRACK_HOST, process.env.YOUTRACK_TOKEN)
+  const f = new ArticleFetcher(access)
 
-	fs.rmSync('./output', { recursive: true, force: true })
-	fs.mkdirSync('./output')
+  fs.rmSync('./output', { recursive: true, force: true })
+  fs.mkdirSync('./output')
 
-	const id = argv.id
+  const id = argv.id
 
-	const article = await f.byId(id)
+  const article = await f.byId(id)
 
-	await preprocessMarkdown(article, f)
+  await preprocessMarkdown(article, f)
 
-	if (article.content) {
-		console.log((article.idReadable || article.id), article.summary)
+  if (article.content) {
+    console.log((article.idReadable || article.id), article.summary)
 
-		await saveAttachments(article, f);
-		await generateDocumentation(article, f)
-	} else {
-		console.log('EMPTY CONTENT', article)
-	}
-
-
-})();
+    await saveAttachments(article, f)
+    await generateDocumentation(article, f)
+  } else {
+    console.log('EMPTY CONTENT', article)
+  }
+})()

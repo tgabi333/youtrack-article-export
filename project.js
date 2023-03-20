@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
-const {generateDocumentation, saveAttachments } = require('./lib/helpers/generate')
+const { generateDocumentation, saveAttachments } = require('./lib/helpers/generate')
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
@@ -12,7 +12,7 @@ const argv = yargs(hideBin(process.argv))
   .demandOption(['project'])
   .argv
 
-;(async() => {
+;(async () => {
   const access = new AccessSettings(process.env.YOUTRACK_HOST, process.env.YOUTRACK_TOKEN)
   const f = new ArticleFetcher(access)
 
@@ -39,5 +39,4 @@ const argv = yargs(hideBin(process.argv))
       console.log('EMPTY CONTENT', article)
     }
   }
-
-})();
+})()
