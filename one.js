@@ -31,8 +31,6 @@ const argv = yargs(hideBin(process.argv))
 
   await preprocessMarkdown(article, f)
 
-  console.log(argv)
-
   const coverPage = (argv.coverpage === false) ? undefined : generateCover(article)
   const toc = (argv.toc === false) ? undefined : generateToC([article])
 
