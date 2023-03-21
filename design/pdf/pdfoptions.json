@@ -1,0 +1,10 @@
+{
+  "format": "A4",
+  "margin": {
+    "top": "30",
+    "bottom": "80",
+    "left": "25",
+    "right": "25"
+  },
+  "displayHeaderFooter": true
+}
