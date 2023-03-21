@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
-const { generateDocumentationStack } = require('./lib/helpers/generate')
+const { generateDocumentation } = require('./lib/helpers/generate')
 const { preprocessMarkdown } = require('./lib/helpers/preProcess')
 const { generateToC } = require('./lib/helpers/toc')
 
@@ -11,7 +11,10 @@ const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
 const { generateCover } = require('./lib/helpers/coverPage')
 const argv = yargs(hideBin(process.argv))
-  .usage('Usage: $0 --id [string]')
+  .usage('Usage: $0 --id [string] --filter [string] --no-coverpage --no-toc')
+  .describe('filter', 'filter out articles with prefix')
+  .describe('no-coverpage', 'Do not generate cover page')
+  .describe('no-toc', 'Do not generate Table of contents')
   .demandOption(['id'])
   .argv
 
@@ -30,7 +33,11 @@ const argv = yargs(hideBin(process.argv))
     process.exit(-1)
   }
 
-  const stack = recursiveFindChildren(root, allArticles)
+  let stack = recursiveFindChildren(root, allArticles)
+
+  if (argv.filter) {
+    stack = stack.filter(a => !a.summary.startsWith(argv.filter))
+  }
 
   // download full articles
   const fullStack = []
@@ -43,10 +50,11 @@ const argv = yargs(hideBin(process.argv))
     await preprocessMarkdown(fullArticle, f)
   }
 
-  const coverPage = generateCover(root)
-  const toc = generateToC(fullStack)
+  const coverPage = (argv.coverpage === false) ? undefined : generateCover(root)
+  const toc = (argv.toc === false) ? undefined : generateToC(fullStack)
 
-  await generateDocumentationStack(fullStack, f, [coverPage, toc])
+  const firstPages = [coverPage, toc].filter(p => !!p)
+  await generateDocumentation(fullStack, f, firstPages)
 
   function recursiveFindChildren (root, allArticles, level = 0) {
     let stack = []

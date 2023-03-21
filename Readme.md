@@ -8,9 +8,11 @@ This tool can export articles from YouTrack via [REST API](https://www.jetbrains
 - generate table of contents
 - download all attachments (into a separate folder)
 - embed images into articles
-- export to pdf
-- export to HTML
+- export to PDF version
+- export to HTML version
+- export to MarkDown version
 - warnings about minimal md styles
+- customizable styles for page header, footer, custom css.
 
 ## Usage
 
@@ -26,10 +28,18 @@ TODO: documentation
 
 ## Scripts
 
+### one.js
+
+This scripts export one article.
+
+```shell
+node project.js --id PROJECT-A-1
+```
+
 ### concat.js
 
 This script is concatenating an article tree. Pass an article ID to it, it will download 
-and concatenate the articles and attacments recursively down the tree.
+and concatenate the articles and attachments recursively down the tree.
 
 ```shell
 node concat.js --id PROJECT-A-1
@@ -37,8 +47,28 @@ node concat.js --id PROJECT-A-1
 
 ### project.js
 
-TODO: documentation
+This script exports all articles one-by-one to a separate export within a project in Youtrack
 
-### one.js
+```shell
+node project.js --id PROJECT
+```
 
-TODO: documentation
+## Output
+
+TODO
+
+## Customization
+
+All scripts have the same customization options.
+
+### Cover Page
+
+TODO
+
+### Styles
+
+TODO
+
+### PDF header and footer
+
+TODO
