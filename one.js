@@ -1,19 +1,15 @@
 require('dotenv').config()
 const fs = require('fs')
-const marked = require('marked')
-const { JSDOM } = require('jsdom')
-const { mdToPdf } = require('md-to-pdf')
-const { transliterate } = require('transliteration')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
 const { generateDocumentation } = require('./lib/helpers/generate')
 const { preprocessMarkdown } = require('./lib/helpers/preProcess')
+const { generateCover } = require('./lib/helpers/coverPage')
+const { generateToC } = require('./lib/helpers/toc')
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
-const { generateCover } = require('./lib/helpers/coverPage');
-const { generateToC } = require('./lib/helpers/toc');
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --id [string] --no-coverpage --no-toc')
   .demandOption(['id'])
