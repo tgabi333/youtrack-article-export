@@ -25,7 +25,10 @@ const argv = yargs(hideBin(process.argv))
   fs.rmSync('./output', { recursive: true, force: true })
   fs.mkdirSync('./output')
 
-  const allArticles = await f.allArticles()
+  let allArticles = await f.allArticles()
+
+  allArticles = allArticles.filter(a => !a.summary.startsWith('TODO'))
+
   console.log('all articles count:', allArticles.length)
   const root = allArticles.find(a => a.id === argv.id || a.idReadable === argv.id)
   if (!root) {

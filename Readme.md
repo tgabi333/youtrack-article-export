@@ -33,7 +33,7 @@ TODO: documentation
 This scripts export one article.
 
 ```shell
-node project.js --id PROJECT-A-1
+node one.js --id PROJECT-A-1
 ```
 
 ### concat.js
