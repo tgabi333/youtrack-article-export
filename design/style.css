@@ -15,6 +15,11 @@ div.toc ul {
     padding: 0;
 }
 
+div.toc ul li {
+    font-size: 20px;
+    padding: .2em;
+}
+
 .coverTitle:first-child {
     padding-top: 15em;
 }
