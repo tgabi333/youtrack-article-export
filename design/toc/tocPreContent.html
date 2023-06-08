@@ -1,1 +1,17 @@
-<div class="coverTitle"><h1>Tartalomjegyzék</h1></div>
+<script>
+  function handleNavigation(event) {
+    event.preventDefault();
+    var targetUrl = event.target.href;
+    window.parent.postMessage({ navigate: targetUrl }, '*');
+  }
+
+  window.onload = function() {
+    var links = document.querySelectorAll('a');
+    for (var i = 0; i < links.length; i++) {
+      links[i].addEventListener('click', handleNavigation);
+    }
+  };
+</script>
+
+<h1>Tartalomjegyzék</h1>
+

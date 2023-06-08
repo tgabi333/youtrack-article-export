@@ -1,0 +1,34 @@
+body {
+    background-color: #f7f9fa;
+}
+
+a {
+    text-decoration: none;
+}
+
+div.toc  ul li {
+    font-size: 20px;
+    padding: 0.2em;
+    font-weight: bold;
+}
+
+div.toc ul li ul li {
+    font-size: 18px;
+    padding: .1em;
+    font-weight: normal;
+}
+
+div.toc ul li ul li ul li {
+    font-size: 16px;
+    padding: .1em;
+    font-weight: normal;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 0.2em;
+}
+
+a.active {
+    color: red
+}

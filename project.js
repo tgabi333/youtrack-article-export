@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
-const { generateDocumentation } = require('./lib/helpers/generate')
+const { generatePdfDocumentation } = require('./lib/helpers/generatePdf')
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
@@ -33,7 +33,7 @@ const argv = yargs(hideBin(process.argv))
     const article = await f.byId(a.id)
 
     if (article.content) {
-      await generateDocumentation(article, f)
+      await generatePdfDocumentation(article, f)
     } else {
       console.log('empty content', (article.idReadable || article.id), article.summary)
     }

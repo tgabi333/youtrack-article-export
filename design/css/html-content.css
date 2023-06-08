@@ -1,0 +1,29 @@
+body {
+    margin: 1em;
+    font-size: 1em;
+}
+
+hr {
+    border: none;
+    height: 1px;
+    background-color: #000;
+    margin: 10px 0;
+}
+
+img {
+    margin: auto;
+    display: block;
+    cursor: pointer;
+}
+
+h1 {
+    color: #333333;
+}
+
+h1.articleHeader {
+    color: #b18b49;
+}
+
+pre {
+    word-wrap: break-word;
+}

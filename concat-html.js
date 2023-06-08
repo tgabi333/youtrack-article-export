@@ -3,7 +3,7 @@ const fs = require('fs')
 
 const AccessSettings = require('./lib/AccessSettings')
 const ArticleFetcher = require('./lib/ArticleFetcher')
-const { generatePdfDocumentation } = require('./lib/helpers/generatePdf')
+const { generateHtmlDocumentation } = require('./lib/helpers/generateHtml')
 const { preprocessMarkdown } = require('./lib/helpers/preProcess')
 const { generateToC } = require('./lib/helpers/toc')
 const { generateCover } = require('./lib/helpers/coverPage')
@@ -54,10 +54,9 @@ const argv = yargs(hideBin(process.argv))
   }
 
   const coverPage = (argv.coverpage === false) ? undefined : generateCover(root)
-  const toc = (argv.toc === false) ? undefined : generateToC(fullStack)
 
-  const firstPages = [coverPage, toc].filter(p => !!p)
-  await generatePdfDocumentation(fullStack, f, firstPages)
+  const firstPages = [coverPage].filter(p => !!p)
+  await generateHtmlDocumentation(fullStack, f, firstPages)
 
   function recursiveFindChildren (root, allArticles, level = 0) {
     let stack = []
