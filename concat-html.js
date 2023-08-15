@@ -28,6 +28,7 @@ const argv = yargs(hideBin(process.argv))
   let allArticles = await f.allArticles()
 
   allArticles = allArticles.filter(a => !a.summary.startsWith('TODO'))
+  allArticles = allArticles.filter(a => !a.summary.startsWith('SKIP'))
 
   console.log('all articles count:', allArticles.length)
   const root = allArticles.find(a => a.id === argv.id || a.idReadable === argv.id)
