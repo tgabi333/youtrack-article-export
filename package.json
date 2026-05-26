@@ -1,23 +1,22 @@
 {
   "name": "youtrack-article-export",
   "version": "1.0.0",
+  "type": "module",
   "main": "project.js",
   "repository": "https://github.com/tgabi333/youtrack-article-export.git",
   "author": "tgabi333 <tgabi333@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@sindresorhus/transliterate": "^1.6.0",
-    "dotenv": "^16.3.1",
-    "fs-extra": "^11.2.0",
-    "jsdom": "^23.0.1",
-    "marked": "^11.0.0",
-    "marked-gfm-heading-id": "^3.1.2",
-    "md-to-pdf": "^5.2.4",
+    "dotenv": "^17.4.2",
+    "fs-extra": "^11.3.5",
+    "marked": "^18.0.4",
+    "marked-gfm-heading-id": "^3.2.0",
+    "md-to-pdf": "^5.2.5",
     "transliteration": "^2.3.5",
-    "yargs": "^17.7.2"
+    "yargs": "^18.0.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "lint": "eslint ."
@@ -28,5 +27,6 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-n": "^16.3.1",
     "eslint-plugin-promise": "^6.1.1"
-  }
+  },
+  "packageManager": "pnpm@9.15.0"
 }

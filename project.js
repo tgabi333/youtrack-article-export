@@ -1,12 +1,12 @@
-require('dotenv').config()
-const fs = require('fs')
+import 'dotenv/config'
+import fs from 'node:fs'
+import yargs from 'yargs/yargs'
+import { hideBin } from 'yargs/helpers'
 
-const AccessSettings = require('./lib/AccessSettings')
-const ArticleFetcher = require('./lib/ArticleFetcher')
-const { generatePdfDocumentation } = require('./lib/helpers/generatePdf')
+import AccessSettings from './lib/AccessSettings.js'
+import ArticleFetcher from './lib/ArticleFetcher.js'
+import { generatePdfDocumentation } from './lib/helpers/generatePdf.js'
 
-const yargs = require('yargs/yargs')
-const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --project [string] --filter [string]')
   .describe('filter', 'filter out articles with prefix')
@@ -33,7 +33,7 @@ const argv = yargs(hideBin(process.argv))
     const article = await f.byId(a.id)
 
     if (article.content) {
-      await generatePdfDocumentation(article, f)
+      await generatePdfDocumentation([article], f)
     } else {
       console.log('empty content', (article.idReadable || article.id), article.summary)
     }
