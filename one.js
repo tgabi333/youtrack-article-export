@@ -1,15 +1,15 @@
-require('dotenv').config()
-const fs = require('fs')
+import 'dotenv/config'
+import fs from 'node:fs'
+import yargs from 'yargs/yargs'
+import { hideBin } from 'yargs/helpers'
 
-const AccessSettings = require('./lib/AccessSettings')
-const ArticleFetcher = require('./lib/ArticleFetcher')
-const { generatePdfDocumentation } = require('./lib/helpers/generatePdf')
-const { preprocessMarkdown } = require('./lib/helpers/preProcess')
-const { generateCover } = require('./lib/helpers/coverPage')
-const { generateToC } = require('./lib/helpers/toc')
+import AccessSettings from './lib/AccessSettings.js'
+import ArticleFetcher from './lib/ArticleFetcher.js'
+import { generatePdfDocumentation } from './lib/helpers/generatePdf.js'
+import { preprocessMarkdown } from './lib/helpers/preProcess.js'
+import { generateCover } from './lib/helpers/coverPage.js'
+import { generateToC } from './lib/helpers/toc.js'
 
-const yargs = require('yargs/yargs')
-const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --id [string] --no-coverpage --no-toc')
   .demandOption(['id'])

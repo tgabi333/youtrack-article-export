@@ -1,15 +1,14 @@
-require('dotenv').config()
-const fs = require('fs')
+import 'dotenv/config'
+import fs from 'node:fs'
+import yargs from 'yargs/yargs'
+import { hideBin } from 'yargs/helpers'
 
-const AccessSettings = require('./lib/AccessSettings')
-const ArticleFetcher = require('./lib/ArticleFetcher')
-const { generateHtmlDocumentation } = require('./lib/helpers/generateHtml')
-const { preprocessMarkdown } = require('./lib/helpers/preProcess')
-const { generateToC } = require('./lib/helpers/toc')
-const { generateCover } = require('./lib/helpers/coverPage')
+import AccessSettings from './lib/AccessSettings.js'
+import ArticleFetcher from './lib/ArticleFetcher.js'
+import { generateHtmlDocumentation } from './lib/helpers/generateHtml.js'
+import { preprocessMarkdown } from './lib/helpers/preProcess.js'
+import { generateCover } from './lib/helpers/coverPage.js'
 
-const yargs = require('yargs/yargs')
-const { hideBin } = require('yargs/helpers')
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 --id [string] --filter [string] --no-coverpage --no-toc')
   .describe('filter', 'filter out articles with prefix')
